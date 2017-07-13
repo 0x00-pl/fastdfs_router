@@ -1,0 +1,30 @@
+<!doctype html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+
+        <title>The HTML5 Herald</title>
+        <meta name="description" content="The HTML5 Herald">
+        <meta name="author" content="SitePoint">
+
+        <link rel="stylesheet" href="css/styles.css?v=1.0">
+
+        <!--[if lt IE 9]>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+        <form action="upload" method="post" enctype="multipart/form-data">
+            <label for="file_upload">File:</label>
+            <input type="file" name="file_upload" id="file_upload"><br>
+            <input type="submit" value="Upload">
+        </form>
+        <form action="download" method="get">
+            <label for="file_download">FileName:</label>
+            <input type="input" name="id" id="id"><br>
+            <input type="submit" value="Dowload">
+        </form>
+    </body>
+</html>
