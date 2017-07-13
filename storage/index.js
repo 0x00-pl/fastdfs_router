@@ -5,10 +5,10 @@ let path = require('path')
 
 let router = express.Router()
 
-let storage_path = './storage'
+let storage_path = './upload'
 
 router.post('/upload', (req, res)=>{
-    let busboy = new Busboy({headers: res.headers})
+    let busboy = new Busboy({headers: req.headers})
     busboy.on('file', (fieldname, file, filename, encoding, mimetype)=>{
         let saveto = path.join(storage_path, filename)
         file.pipe(fs.createWriteStream(saveto))

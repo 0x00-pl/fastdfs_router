@@ -1,6 +1,6 @@
 let express = require('express')
 
-let tracker = require('../reacker')([['localhost:8091']])
+let tracker = require('../tracker')([['localhost:8091']])
 let storage = require('../storage')()
 let client = require('../client')
 
