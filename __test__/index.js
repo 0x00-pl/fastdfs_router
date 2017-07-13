@@ -1,7 +1,8 @@
 let express = require('express')
+let path = require('path')
 
-let tracker = require('../tracker')([['localhost:8091']])
-let storage = require('../storage')()
+let tracker = require('../tracker')([['127.0.0.1:8091']])
+let storage = require('../storage')(path.join(__dirname, '/upload'))
 let client = require('../client')
 
 let tracker_app = express()
