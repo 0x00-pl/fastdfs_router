@@ -1,0 +1,25 @@
+{
+  "name": "fastdfs_router",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "busboy": "^0.2.14",
+    "express": "^4.15.3",
+    "md5": "^2.2.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node __test__"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/0x00-pl/fastdfs_router.git"
+  },
+  "author": "pl",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/0x00-pl/fastdfs_router/issues"
+  },
+  "homepage": "https://github.com/0x00-pl/fastdfs_router#readme"
+}
