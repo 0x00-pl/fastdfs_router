@@ -39,12 +39,16 @@
              ev.preventDefault()
              let fe = document.getElementById('file_upload').files[0]
 
-             let a = (new Array(10)).fill(null)
+             let a = (new Array(100)).fill(null)
              let b = new Date()
              a = a.map((n,i)=>{
                  let f = new FormData()
                  f.append('file_upload', fe, 'file'+i)
-                 return fetch('http://127.0.0.1:8091/upload', {method: 'POST', body: f})
+                 return fetch('http://127.0.0.1:8091/upload',
+                              {
+                                  method: 'POST',
+                                  body: f
+                              })
              })
              Promise.all(a).then(_=>{
                  let e = new Date()
