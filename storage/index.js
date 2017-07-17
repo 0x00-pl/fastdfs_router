@@ -14,14 +14,15 @@ router.post('/upload', (req, res)=>{
         file.pipe(fs.createWriteStream(saveto))
     })
     busboy.on('finish', ()=>{
-        res.end()
+        res.set('Access-Control-Allow-Origin', '*').end()
     })
     req.pipe(busboy)
 })
 
 router.get('/download', (req, res)=>{
     let loadfrom = path.join(storage_path, res.query.id)
-    res.download(loadfrom)
+    res.set('Access-Control-Allow-Origin', '*')
+        .download(loadfrom)
 })
 
 router.get('/files', (req, res)=>{
@@ -29,7 +30,8 @@ router.get('/files', (req, res)=>{
         if(err){
             res.status(500).end(err)
         }else{
-            res.end(JSON.stringify(files))
+            res.set('Access-Control-Allow-Origin', '*')
+                .end(JSON.stringify(files))
         }
     })
 })

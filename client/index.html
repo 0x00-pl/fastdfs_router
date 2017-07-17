@@ -17,12 +17,42 @@
         <form action="http://127.0.0.1:8090/upload" method="post" enctype="multipart/form-data">
             <label for="file_upload">File:</label>
             <input type="file" name="file_upload" id="file_upload"><br>
-            <input type="submit" value="Upload">
+            <input id="upload" type="submit" value="Upload">
+            <input id="upload1000" type="submit" value="Upload1000">
         </form>
         <form action="download" method="get">
             <label for="file_download">FileName:</label>
             <input type="input" name="id" id="id"><br>
             <input type="submit" value="Dowload">
         </form>
+        <script type="text/javascript">
+         function upload(ev) {
+             ev.preventDefault()
+             let fe = ev.target.parentElement
+             let f = new FormData(fe)
+             fetch('http://127.0.0.1:8090/upload', {method: 'POST', body: f})
+
+         }
+         document.getElementById('upload').onclick = upload
+
+         function upload1000(ev) {
+             ev.preventDefault()
+             let fe = document.getElementById('file_upload').files[0]
+
+             let a = (new Array(10)).fill(null)
+             let b = new Date()
+             a = a.map((n,i)=>{
+                 let f = new FormData()
+                 f.append('file_upload', fe, 'file'+i)
+                 return fetch('http://127.0.0.1:8091/upload', {method: 'POST', body: f})
+             })
+             Promise.all(a).then(_=>{
+                 let e = new Date()
+                 console.log(e-b)
+             })
+         }
+         document.getElementById('upload1000').onclick = upload1000
+
+        </script>
     </body>
 </html>

@@ -22,28 +22,31 @@ router.get('/upload', (req, res)=>{
     let url = req.protocol+'://'+server+'/upload'
         res.end(url)
     }else{
-        res.status(404).end('please send file "id" in query.')
+        res.set('Access-Control-Allow-Origin', '*')
+            .status(404)
+            .end('please send file "id" in query.')
     }
 })
 
 router.post('/upload', (req, res)=>{
     let busboy = new Busboy({headers: req.headers, limits: {files: 1}})
     busboy.on('filesLimit', ()=>{
-        res.status(404).end('too many files.')
+        res.status(404)
+            .end('too many files.')
     })
     busboy.on('file', (fieldname, file, filename, encoding, mimetype)=>{
-        console.log('tracker.file')
         let server = choose_server(filename)
         let url = req.protocol+'://'+server+req.originalUrl
         file.on('data', _=>null)
         file.on('end', ()=>{
             res.redirect(307, url)
-            console.log('tracker.redirect')
         })
     })
     busboy.on('finish', ()=>{
-        res.status(404).end('no file found.')
+        res.status(404)
+            .end('no file found.')
     })
+    res.set('Access-Control-Allow-Origin', '*')
     req.pipe(busboy)
 })
 
