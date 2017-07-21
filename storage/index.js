@@ -5,38 +5,37 @@ let path = require('path')
 
 let router = express.Router()
 
-let storage_path = './upload'
+module.exports = function (storage_path) {
+    storage_path = storage || './upload'
 
-router.post('/upload', (req, res)=>{
-    let busboy = new Busboy({headers: req.headers})
-    busboy.on('file', (fieldname, file, filename, encoding, mimetype)=>{
-        let saveto = path.join(storage_path, filename)
-        file.pipe(fs.createWriteStream(saveto))
+    router.post('/upload', (req, res)=>{
+        let busboy = new Busboy({headers: req.headers})
+        busboy.on('file', (fieldname, file, filename, encoding, mimetype)=>{
+            let saveto = path.join(storage_path, filename)
+            file.pipe(fs.createWriteStream(saveto))
+        })
+        busboy.on('finish', ()=>{
+            res.set('Access-Control-Allow-Origin', '*').end()
+        })
+        req.pipe(busboy)
     })
-    busboy.on('finish', ()=>{
-        res.set('Access-Control-Allow-Origin', '*').end()
+
+    router.get('/download', (req, res)=>{
+        let loadfrom = path.join(storage_path, res.query.id)
+        res.set('Access-Control-Allow-Origin', '*')
+            .download(loadfrom)
     })
-    req.pipe(busboy)
-})
 
-router.get('/download', (req, res)=>{
-    let loadfrom = path.join(storage_path, res.query.id)
-    res.set('Access-Control-Allow-Origin', '*')
-        .download(loadfrom)
-})
-
-router.get('/files', (req, res)=>{
-    fs.readdir(storage_path, (err, files)=>{
-        if(err){
-            res.status(500).end(err)
-        }else{
-            res.set('Access-Control-Allow-Origin', '*')
-                .end(JSON.stringify(files))
-        }
+    router.get('/files', (req, res)=>{
+        fs.readdir(storage_path, (err, files)=>{
+            if(err){
+                res.status(500).end(err)
+            }else{
+                res.set('Access-Control-Allow-Origin', '*')
+                    .end(JSON.stringify(files))
+            }
+        })
     })
-})
 
-module.exports = storage_path_ => {
-    storage_path = storage_path_ || storage_path
     return router
 }
